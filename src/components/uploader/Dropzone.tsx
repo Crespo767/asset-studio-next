@@ -21,9 +21,14 @@ export function Dropzone({ onImageLoad, currentImage, onClear }: DropzoneProps) 
 
   const handleFile = useCallback(async (file: File) => {
     setError(null);
-    
-    if (!ACCEPTED_TYPES.includes(file.type)) {
-      setError('Formato não suportado. Use PNG, JPG ou WebP.');
+
+    // Security: Validate file before processing
+    try {
+      const { validateFile } = await import('@/lib/security/fileValidation');
+      await validateFile(file);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Arquivo inválido.';
+      setError(message);
       return;
     }
 
@@ -85,7 +90,7 @@ export function Dropzone({ onImageLoad, currentImage, onClear }: DropzoneProps) 
     const handleGlobalPaste = (e: ClipboardEvent) => {
       const items = e.clipboardData?.items;
       if (!items) return;
-      
+
       for (const item of items) {
         if (item.type.startsWith('image/')) {
           const file = item.getAsFile();
@@ -106,8 +111,8 @@ export function Dropzone({ onImageLoad, currentImage, onClear }: DropzoneProps) 
       <div className="panel animate-fade-in">
         <div className="flex items-start gap-4">
           <div className="h-16 w-16 rounded-lg bg-muted overflow-hidden flex-shrink-0">
-            <img 
-              src={currentImage.url} 
+            <img
+              src={currentImage.url}
               alt="Preview"
               className="h-full w-full object-cover"
             />
@@ -123,9 +128,9 @@ export function Dropzone({ onImageLoad, currentImage, onClear }: DropzoneProps) 
               {formatFileSize(currentImage.size)}
             </p>
           </div>
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={onClear}
             aria-label="Remover imagem"
           >
@@ -158,7 +163,7 @@ export function Dropzone({ onImageLoad, currentImage, onClear }: DropzoneProps) 
         className="hidden"
         id="file-input"
       />
-      
+
       <label htmlFor="file-input" className="cursor-pointer">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
@@ -170,7 +175,7 @@ export function Dropzone({ onImageLoad, currentImage, onClear }: DropzoneProps) 
               <ImageIcon className="h-6 w-6 text-muted-foreground" />
             )}
           </div>
-          
+
           <div>
             <p className="text-sm font-medium">
               {isDragActive ? 'Solte a imagem aqui' : 'Arraste uma imagem ou clique para carregar'}
