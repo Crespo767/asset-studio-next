@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Asset Studio",
-  description: "Ferramentas para mestres e criadores: remoção de fundo, redimensionamento e extensão com IA. Mapas para Foundry VTT e wallpapers.",
+  description: "Ferramentas de imagem: remoção de fundo, rotação, recorte, conversão de formato, resolução e qualidade. Rápido e simples.",
 };
 
 export default function RootLayout({

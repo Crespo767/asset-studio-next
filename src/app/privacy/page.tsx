@@ -25,7 +25,7 @@ export default function Privacy() {
               Privacidade levada a sério
             </h1>
             <p className="mt-3 text-lg text-muted-foreground">
-              Sua arte é sua. Nós não queremos vê-la, muito menos guardá-la.
+              Sua arte é sua. Entenda como tratamos seus dados.
             </p>
           </div>
         </section>
@@ -37,12 +37,12 @@ export default function Privacy() {
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
                   <Server className="h-5 w-5 text-primary" />
                 </div>
-                <CardTitle className="text-lg">Processamento local</CardTitle>
+                <CardTitle className="text-lg">Processamento no navegador</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <CardDescription className="text-sm leading-relaxed">
-                O Asset Studio não possui backend para armazenar imagens. Remoção de fundo, redimensionamento, crop e efeitos de layout rodam no seu navegador, usando apenas as APIs do dispositivo.
+                Rotação, recorte, redimensionamento e conversão de formato rodam 100% no seu navegador usando a API Canvas. Nenhuma imagem é enviada para servidores durante essas operações.
               </CardDescription>
             </CardContent>
           </Card>
@@ -53,12 +53,12 @@ export default function Privacy() {
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
                   <Cloud className="h-5 w-5 text-primary" />
                 </div>
-                <CardTitle className="text-lg">Extensão com IA (opcional)</CardTitle>
+                <CardTitle className="text-lg">Remoção de fundo</CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <CardDescription className="text-sm leading-relaxed">
-                Quando você usa a função &quot;Gerar extensão com IA&quot;, a imagem é enviada de forma temporária a um serviço de IA (Cloudflare Workers AI) para gerar as laterais. A imagem não é armazenada nem usada para treinamento; é processada e descartada. Esse é o único caso em que dados saem do seu navegador.
+                Ao usar a função &quot;Remover Fundo&quot;, a imagem é enviada temporariamente à API remove.bg para processamento. A imagem é processada e descartada imediatamente — não é armazenada nem usada para treinamento. Este é o único caso em que dados saem do seu navegador.
               </CardDescription>
             </CardContent>
           </Card>
@@ -74,7 +74,7 @@ export default function Privacy() {
             </CardHeader>
             <CardContent>
               <CardDescription className="text-sm leading-relaxed">
-                Não coletamos, armazenamos nem analisamos suas imagens para fins de analytics ou histórico. O uso do site pode envolver cookies ou métricas mínimas do provedor de hospedagem; o conteúdo das suas imagens não é rastreado.
+                Não coletamos, armazenamos nem analisamos suas imagens. O uso do site pode envolver cookies mínimos do provedor de hospedagem; o conteúdo das suas imagens nunca é rastreado.
               </CardDescription>
             </CardContent>
           </Card>

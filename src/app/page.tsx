@@ -6,34 +6,40 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import {
-  Sparkles,
-  Maximize2,
+  Eraser,
+  RotateCw,
   FileImage,
-  Monitor,
+  Maximize2,
+  Crop,
   Shield,
   Zap,
 } from 'lucide-react';
 
 const features = [
   {
-    icon: Sparkles,
-    title: 'Extensão com IA',
-    description: 'Transforme imagens verticais em mapas horizontais para Foundry VTT. A IA preenche as laterais de forma natural, sem duplicar a cena.',
+    icon: Eraser,
+    title: 'Remoção de Fundo',
+    description: 'Remova o fundo de qualquer imagem automaticamente. Powered by remove.bg — resultado profissional em segundos.',
+  },
+  {
+    icon: RotateCw,
+    title: 'Rotação e Flip',
+    description: 'Gire imagens em 90°, 180° ou 270°. Espelhe horizontal e verticalmente. Converta vertical para horizontal.',
+  },
+  {
+    icon: Crop,
+    title: 'Recorte Livre',
+    description: 'Recorte imagens de forma interativa. Selecione exatamente a área que deseja manter, sem restrições.',
   },
   {
     icon: Maximize2,
-    title: 'Layout e wallpapers',
-    description: 'Fit com fundo blur, sólido ou gradiente; crop interativo; ou extensão por mirror/stretch. Tudo no navegador.',
-  },
-  {
-    icon: Monitor,
-    title: 'Presets prontos',
-    description: '1080p, 4K, Ultrawide e presets para Foundry VTT (16:9 e 3:2, 100px/grid). Ideal para mapas de RPG.',
+    title: 'Resolução e Qualidade',
+    description: 'Redimensione para qualquer resolução. Controle fino de qualidade. Presets de HD até 4K disponíveis.',
   },
   {
     icon: FileImage,
-    title: 'Otimização e formatos',
-    description: 'Exporte em PNG, JPG, WebP ou ICO. Controle de qualidade e meta de tamanho. Batch em ZIP.',
+    title: 'Conversão de Formato',
+    description: 'Converta entre PNG, JPG, WebP, AVIF, BMP e ICO. Exporte no formato ideal para cada uso.',
   },
 ];
 
@@ -57,13 +63,14 @@ export default function Home() {
           <div className="container mx-auto max-w-6xl px-4 py-24 md:py-32">
             <div className="mx-auto max-w-3xl text-center space-y-6">
               <p className="text-sm font-medium uppercase tracking-wider text-primary">
-                Ferramentas para mestres e criadores
+                Ferramentas de imagem simples e poderosas
               </p>
               <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
-                Suas imagens, prontas para o jogo.
+                Edite suas imagens em segundos.
               </h1>
               <p className="text-lg text-muted-foreground md:text-xl">
-                Remoção de fundo, redimensionamento e extensão com IA. Sem upload, sem espera — 100% no seu controle.
+                Remova fundos, redimensione, recorte, converta formatos e muito mais.
+                Tudo direto no navegador — rápido, simples e seguro.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                 <Button asChild size="lg" className="h-11 px-6 text-base shadow-lg shadow-primary/25">
@@ -87,10 +94,10 @@ export default function Home() {
               Tudo o que você precisa
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Processamento local e opção de IA para estender cenários. Privado e rápido.
+              Cinco ferramentas essenciais para editar imagens. Sem complicação.
             </p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, index) => (
               <Card
                 key={index}
@@ -118,13 +125,13 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-2">
                 <Shield className="h-4 w-4 text-primary/80" />
-                Processamento local
+                Processamento seguro
               </span>
               <span className="flex items-center gap-2">
                 <Zap className="h-4 w-4 text-primary/80" />
-                Sem upload obrigatório
+                Rápido e simples
               </span>
-              <span>Foundry VTT • Mapas • Wallpapers</span>
+              <span>PNG • JPG • WebP • AVIF • ICO • BMP</span>
             </div>
           </div>
         </section>

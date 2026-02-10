@@ -9,42 +9,46 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { ArrowLeft, HelpCircle, FileImage, Maximize2, Wand2, Sparkles } from 'lucide-react';
+import { ArrowLeft, HelpCircle, Eraser, Crop, FileImage, Maximize2, Sparkles } from 'lucide-react';
 
 const faqs = [
   {
-    question: 'Por que a remoção de fundo demora na primeira vez?',
-    answer: `Para garantir sua privacidade, não enviamos sua imagem para a nuvem. O Asset Studio baixa um modelo de IA (~40MB) para rodar no seu navegador.\n\n• Primeira vez: o download pode levar alguns segundos.\n• Depois: o processamento fica bem mais rápido, pois o modelo já está no seu computador.`,
+    question: 'Como funciona a remoção de fundo?',
+    answer: `O Asset Studio usa a API remove.bg para remover o fundo da imagem. Basta carregar a imagem no Studio e clicar em "Remover Fundo". O resultado é uma imagem PNG com fundo transparente.\n\nNota: a remoção de fundo requer uma API key do remove.bg (os primeiros 50 usos/mês são gratuitos).`,
   },
   {
-    question: 'Como funcionam os modos de layout?',
-    answer: `Há três formas de adaptar uma imagem vertical para formato horizontal:\n\n1. Fit: mantém a imagem inteira no centro e preenche as laterais com fundo (blur, sólido ou gradiente).\n2. Crop: recorte interativo para escolher a área que vai preencher a tela.\n3. Estender bordas: Mirror ou Stretch para preencher lateralmente; ou IA para expandir o cenário de forma natural (ideal para mapas Foundry VTT).`,
+    question: 'Como faço para rotacionar uma imagem vertical para horizontal?',
+    answer: `No Studio, abra a seção "Rotação e Flip" e clique no botão de 90° na direção desejada. Para imagens verticais que precisam ficar horizontais, basta rotacionar 90° para a esquerda ou direita.`,
   },
   {
-    question: 'A extensão com IA às vezes sai cinza ou com costuras. O que fazer?',
-    answer: `O modelo usa aleatoriedade, então cada geração é diferente. Se o resultado não ficar bom:\n\n• Gere novamente — a próxima tentativa pode sair melhor.\n• Use orientação Horizontal, proporção 16:9 ou 3:2 e um preset Foundry (ex.: 3200×1800).\n• Quando ficar bom, clique em 👍 (Gostei) para que as próximas gerações usem as mesmas preferências.`,
+    question: 'Posso recortar a imagem livremente?',
+    answer: `Sim! Na seção "Recorte", clique em "Abrir Recorte". Um editor interativo permite selecionar exatamente a área que deseja manter. Use o zoom para detalhes e confirme quando estiver satisfeito.`,
   },
   {
     question: 'Quais formatos posso exportar?',
-    answer: `PNG (sem perda), JPG e WebP (com controle de qualidade) e ICO para ícones. Para mapas grandes (ex.: Foundry VTT), WebP é recomendado para manter o arquivo menor e carregamento rápido.`,
+    answer: `O Asset Studio suporta: PNG (sem perda, ideal para transparência), JPG (menor tamanho com controle de qualidade), WebP (moderno e eficiente), AVIF (alta compressão), BMP (compatibilidade) e ICO (ícones).`,
+  },
+  {
+    question: 'Como altero a resolução e a qualidade?',
+    answer: `Na seção "Resolução", escolha um preset (HD, Full HD, 4K, etc.) ou digite as dimensões manualmente. Na seção "Formato e Qualidade", use o slider para ajustar a qualidade (disponível para JPG, WebP e AVIF).`,
   },
 ];
 
 const quickTopics = [
   {
-    icon: Wand2,
-    title: 'IA local',
-    description: 'Remoção de fundo e modelos rodam no navegador. Zero upload das suas imagens.',
+    icon: Eraser,
+    title: 'Remoção de fundo',
+    description: 'Remove o fundo automaticamente usando a API remove.bg. Resultado profissional em segundos.',
   },
   {
-    icon: Maximize2,
-    title: 'Layout',
-    description: 'Fit, crop ou estender (mirror, stretch ou IA) para wallpapers e mapas.',
+    icon: Crop,
+    title: 'Recorte e Rotação',
+    description: 'Recorte livre, rotação em 90°, flip horizontal e vertical. Tudo interativo.',
   },
   {
     icon: FileImage,
-    title: 'Exportação',
-    description: 'PNG, JPG, WebP, ICO. Batch em ZIP com vários tamanhos.',
+    title: 'Formato e Qualidade',
+    description: 'PNG, JPG, WebP, AVIF, BMP, ICO. Resolução personalizável com presets prontos.',
   },
 ];
 
@@ -74,7 +78,7 @@ export default function Help() {
                   Central de Ajuda
                 </h1>
                 <p className="mt-1 text-muted-foreground">
-                  Dúvidas sobre remoção de fundo, layout e extensão com IA.
+                  Dúvidas sobre as ferramentas do Asset Studio.
                 </p>
               </div>
             </div>
@@ -122,7 +126,7 @@ export default function Help() {
 
           <div className="mt-16 flex flex-col items-center justify-center rounded-xl border border-border/60 bg-muted/20 p-8 text-center">
             <Sparkles className="mb-3 h-8 w-8 text-primary/80" />
-            <p className="text-sm font-medium text-foreground">Pronto para criar?</p>
+            <p className="text-sm font-medium text-foreground">Pronto para editar?</p>
             <p className="mt-1 text-sm text-muted-foreground">Abra o Studio e carregue sua primeira imagem.</p>
             <Button asChild size="lg" className="mt-5">
               <Link href="/studio">Abrir Studio</Link>

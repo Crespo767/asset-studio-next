@@ -7,35 +7,7 @@ export interface ImageFile {
   height: number;
   name: string;
   size: number;
-  element: HTMLImageElement; // ADICIONADO: Necessário para o canvas ler a imagem
-}
-
-export type WallpaperMode = 'fit' | 'crop' | 'extend';
-export type BackgroundType = 'blur' | 'solid' | 'gradient';
-export type ExtendMode = 'mirror' | 'stretch' | 'ai'; // ALTERADO: Adicionado 'ai'
-export type Orientation = 'horizontal' | 'vertical';
-
-export interface PreprocessingSettings {
-  removeBackground: boolean;
-}
-
-export interface WallpaperSettings {
-  enabled: boolean;
-  orientation: Orientation;
-  mode: WallpaperMode;
-  aspectRatio: string;
-  customWidth?: number;
-  customHeight?: number;
-  background: {
-    type: BackgroundType;
-    blurIntensity: number;
-    solidColor: string;
-    gradientStart: string;
-    gradientEnd: string;
-  };
-  extendMode: ExtendMode;
-  aiGeneratedImage?: string; // ADICIONADO: Guarda o resultado da IA
-  crop?: CropData;
+  element: HTMLImageElement;
 }
 
 export interface CropData {
@@ -45,33 +17,20 @@ export interface CropData {
   height: number;
 }
 
-export interface OutputSettings {
-  preset: string;
-  customWidth: number;
-  customHeight: number;
+export interface ResizeSettings {
+  width: number;
+  height: number;
   maintainAspect: boolean;
-  fitMode: 'contain' | 'cover';
 }
 
-export interface OptimizationSettings {
+export interface ToolSettings {
+  rotation: number;        // 0, 90, 180, 270
+  flipH: boolean;
+  flipV: boolean;
+  resize: ResizeSettings;
+  quality: number;         // 1–100
   format: FormatId;
-  quality: number;
-  targetSizeEnabled: boolean;
-  targetSizeMB: number;
-  removeMetadata: boolean;
-}
-
-export interface BatchSettings {
-  enabled: boolean;
-  selectedPresets: string[];
-}
-
-export interface StudioSettings {
-  preprocessing: PreprocessingSettings;
-  wallpaper: WallpaperSettings;
-  output: OutputSettings;
-  optimization: OptimizationSettings;
-  batch: BatchSettings;
+  crop?: CropData;
 }
 
 export interface ExportResult {
@@ -83,40 +42,17 @@ export interface ExportResult {
   size: number;
 }
 
-export const DEFAULT_SETTINGS: StudioSettings = {
-  preprocessing: {
-    removeBackground: false,
-  },
-  wallpaper: {
-    enabled: false,
-    orientation: 'horizontal',
-    mode: 'fit',
-    aspectRatio: '16:9',
-    background: {
-      type: 'blur',
-      blurIntensity: 40,
-      solidColor: '#1a1a1a',
-      gradientStart: '#1a1a1a',
-      gradientEnd: '#2d2d2d',
+export function createDefaultSettings(image?: ImageFile | null): ToolSettings {
+  return {
+    rotation: 0,
+    flipH: false,
+    flipV: false,
+    resize: {
+      width: image?.width ?? 1920,
+      height: image?.height ?? 1080,
+      maintainAspect: true,
     },
-    extendMode: 'mirror',
-  },
-  output: {
-    preset: 'fhd',
-    customWidth: 1920,
-    customHeight: 1080,
-    maintainAspect: true,
-    fitMode: 'contain',
-  },
-  optimization: {
-    format: 'png',
     quality: 90,
-    targetSizeEnabled: false,
-    targetSizeMB: 5,
-    removeMetadata: true,
-  },
-  batch: {
-    enabled: false,
-    selectedPresets: ['fhd', 'qhd', '4k'],
-  },
-};
+    format: 'png',
+  };
+}
