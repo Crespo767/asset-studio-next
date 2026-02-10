@@ -15,10 +15,20 @@ export async function POST(req: Request) {
         const rateLimitResult = rateLimit(clientIp, RATE_LIMIT_CONFIG);
 
         if (!rateLimitResult.success) {
+            // Track abuse for persistent offenders
+            const { trackAbuse, isAbusive } = await import('@/lib/security/rateLimit');
+            trackAbuse(clientIp);
+
+            const isAbusiveIp = isAbusive(clientIp);
+
             return NextResponse.json(
-                { error: 'Muitas requisições. Tente novamente em alguns instantes.' },
                 {
-                    status: 429,
+                    error: isAbusiveIp
+                        ? 'IP bloqueado por abuso. Entre em contato com o suporte.'
+                        : 'Muitas requisições. Tente novamente em alguns instantes.'
+                },
+                {
+                    status: isAbusiveIp ? 403 : 429,
                     headers: {
                         'X-RateLimit-Limit': rateLimitResult.limit.toString(),
                         'X-RateLimit-Remaining': '0',
@@ -88,6 +98,10 @@ export async function POST(req: Request) {
         return new NextResponse(resultBlob, {
             headers: {
                 'Content-Type': 'image/png',
+                'X-Content-Type-Options': 'nosniff', // Prevent MIME sniffing
+                'Cache-Control': 'private, no-cache, no-store, must-revalidate', // No caching
+                'Pragma': 'no-cache', // HTTP/1.0 compatibility
+                'Expires': '0', // HTTP/1.0 compatibility
                 'X-RateLimit-Limit': rateLimitResult.limit.toString(),
                 'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
                 'X-RateLimit-Reset': new Date(rateLimitResult.reset).toISOString(),

@@ -7,6 +7,15 @@ export function middleware(request: NextRequest) {
     // Security Headers
     const headers = response.headers;
 
+    // HSTS (Production only - staged rollout recommended)
+    // Start with max-age=300 (5 min) in dev, then increase gradually in production
+    if (process.env.NODE_ENV === 'production') {
+        headers.set(
+            'Strict-Transport-Security',
+            'max-age=63072000; includeSubDomains; preload'
+        );
+    }
+
     // Content Security Policy
     headers.set(
         'Content-Security-Policy',
@@ -20,6 +29,7 @@ export function middleware(request: NextRequest) {
             "frame-ancestors 'none'",
             "base-uri 'self'",
             "form-action 'self'",
+            "upgrade-insecure-requests", // Force HTTPS for all requests
         ].join('; ')
     );
 
@@ -40,6 +50,11 @@ export function middleware(request: NextRequest) {
         'Permissions-Policy',
         'camera=(), microphone=(), geolocation=(), interest-cohort=()'
     );
+
+    // Cross-Origin policies (Spectre protection)
+    headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
+    headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+    headers.set('Cross-Origin-Resource-Policy', 'same-origin');
 
     return response;
 }

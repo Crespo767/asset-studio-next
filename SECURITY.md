@@ -35,6 +35,7 @@ Asset Studio implements the following security controls:
 
 ### 2. **API Security**
 - ✅ Rate limiting (10 requests/minute per IP)
+- ✅ Abuse tracking (blocks IPs with >50 violations/hour)
 - ✅ Input validation and sanitization
 - ✅ Secure error handling (no stack traces exposed)
 - ✅ API key stored server-side only
@@ -44,14 +45,19 @@ Asset Studio implements the following security controls:
 - ✅ No `NEXT_PUBLIC_` prefix on secrets
 - ✅ `.env` files excluded from version control
 - ✅ Server-side only access to sensitive data
+- ✅ Trust proxy configuration for accurate IP detection
 
 ### 4. **Security Headers**
-- ✅ Content Security Policy (CSP)
+- ✅ Content Security Policy (CSP) with upgrade-insecure-requests
 - ✅ X-Frame-Options (clickjacking prevention)
 - ✅ X-Content-Type-Options (MIME sniffing prevention)
 - ✅ X-XSS-Protection
 - ✅ Referrer-Policy
 - ✅ Permissions-Policy
+- ✅ **Strict-Transport-Security (HSTS) with preload** (production)
+- ✅ **Cross-Origin-Embedder-Policy (COEP)** (Spectre protection)
+- ✅ **Cross-Origin-Opener-Policy (COOP)** (Spectre protection)
+- ✅ **Cross-Origin-Resource-Policy (CORP)** (Spectre protection)
 
 ### 5. **Client-Side Security**
 - ✅ All image processing in browser (except background removal)
@@ -67,27 +73,34 @@ Asset Studio implements the following security controls:
 
 ### 1. **Rate Limiting**
 - In-memory rate limiting resets on server restart
-- For production, consider Redis-based rate limiting
+- For production scalability, consider Redis-based rate limiting (Upstash/Vercel KV)
+- Abuse tracking also in-memory (consider persistent storage for high-traffic)
 
 ### 2. **CSRF Protection**
 - Next.js API routes use SameSite cookies by default
-- For additional protection, consider implementing CSRF tokens
+- Server Actions compare Origin vs Host headers
+- For custom route handlers, consider implementing CSRF tokens if needed
 
 ### 3. **File Storage**
 - Files are processed in-memory only
 - No persistent storage of user uploads
+- Images sent to remove.bg are discarded after processing
 
 ## Security Best Practices for Deployment
 
 ### Production Checklist
 
 - [ ] Set `REMOVEBG_API_KEY` in environment variables
+- [ ] Set `NODE_ENV=production`
+- [ ] Configure `TRUSTED_PROXIES` if behind CDN/load balancer
 - [ ] Enable HTTPS (required)
+- [ ] Verify HSTS header in production
+- [ ] Validate security headers (securityheaders.com)
 - [ ] Configure proper CORS if needed
 - [ ] Set up monitoring and logging
-- [ ] Implement persistent rate limiting (Redis)
+- [ ] Consider persistent rate limiting (Redis) for scale
 - [ ] Regular dependency updates
-- [ ] Security header verification
+- [ ] Follow [DEPLOYMENT_SECURITY.md](DEPLOYMENT_SECURITY.md) guide
 
 ### Vercel Deployment
 

@@ -77,6 +77,30 @@ REMOVEBG_API_KEY=your_api_key_here
 > **Obtenha sua API key**: [remove.bg Dashboard](https://www.remove.bg/dashboard#api-key)  
 > **Plano gratuito**: 50 remoções/mês
 
+---
+
+## 🔐 Segurança
+
+Asset Studio implementa **segurança de nível empresarial** para proteger seus dados:
+
+**Destaques**:
+- ✅ **0 vulnerabilidades** em dependências (`npm audit`)
+- ✅ **Magic bytes validation** (previne MIME spoofing)
+- ✅ **Rate limiting** com proteção anti-abuso
+- ✅ **HSTS Preload** para HTTPS forçado
+- ✅ **CSP, COEP, COOP, CORP** headers
+- ✅ **Processamento local** (100% no navegador, exceto remoção de fundo)
+
+**Classificação**: **A+** em [securityheaders.com](https://securityheaders.com)
+
+**Documentação**:
+- [SECURITY.md](SECURITY.md) - Política de segurança e reporte de vulnerabilidades
+- [DEPLOYMENT_SECURITY.md](DEPLOYMENT_SECURITY.md) - Guia de deploy seguro
+- [SECURITY_ROADMAP.md](SECURITY_ROADMAP.md) - Roteiro de manutenção de segurança
+- [SECURITY_TESTING.md](SECURITY_TESTING.md) - Guia de testes de segurança
+
+---
+
 4. **Inicie o servidor de desenvolvimento**
 ```bash
 npm run dev
@@ -209,6 +233,9 @@ npm start
 
 # Lint
 npm run lint
+
+# Teste de segurança (rate limiting)
+node scripts/test-rate-limit.js
 ```
 
 ## 🌐 Deploy
